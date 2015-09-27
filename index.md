@@ -322,7 +322,7 @@ The results by calories are similar, with a couple of high-calorie crops like be
 
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.svg) 
 
-The results by plot are here - congratulations to Priscilla, Leslie, Dan, Masha and Phil and everyone the worked on the Community plot!
+The results by plot are here - congratulations to Priscilla, Leslie, Dan, Masha and Phil and everyone that worked on the Community plot!
 
 ![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.svg) 
 
