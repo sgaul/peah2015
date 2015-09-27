@@ -106,8 +106,8 @@ While we are still harvesting, gardeners so far have distributed 2,500 pounds of
 },
 {
  "Year": 2015,
-"Pounds":        2503.35,
-"Calories":     233561.435 
+"Pounds":        2580.35,
+"Calories":     240780.035 
 } 
 ]
   
@@ -252,8 +252,8 @@ Here is the same result in pounds harvested.
 },
 {
  "Year": 2015,
-"Pounds":        2503.35,
-"Calories":     233561.435 
+"Pounds":        2580.35,
+"Calories":     240780.035 
 } 
 ]
   

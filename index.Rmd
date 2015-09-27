@@ -25,7 +25,7 @@ knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = T)
 ```
 
 
-```{r chart1, echo = FALSE, message = FALSE, warning = FALSE, dev = "svg"}
+```{r chart1, echo = FALSE, message = FALSE, warning = FALSE}
 library(ggplot2)
 library(reshape)
 library(plyr)
@@ -51,7 +51,7 @@ n1$print('chart1')
 
 Here is the same result in pounds harvested. 
 
-```{r chart2, echo = FALSE, message = FALSE, warning = FALSE, dev = "svg"}
+```{r chart2, echo = FALSE, message = FALSE, warning = FALSE}
 n1 <- nPlot(y = 'Pounds', x = 'Year', 
             width = 500, height = 300,
             data = ddply(peah, .(Year), summarise, 
