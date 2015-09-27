@@ -66,6 +66,62 @@ n1$print('chart2')
 
 ## 2015 individual results
 
+We distributed 27 different kinds of vegetables this year - more than most years - with tomatoes, squash and zucchini yielding the most (over 300 lbs of each). 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+peah15bycrop <- ddply(peah15, .(Crop), summarise, Pounds = sum(Pounds), Calories = sum(Calories))
+peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Pounds)
+
+library(ggthemes)
+ggplot(data = peah15bycrop) + 
+  geom_bar(aes(x = Crop, y = Pounds), 
+           stat = "identity", width =0.5, alpha =0.4) +
+  geom_hline(yintercept=c(200,400,600), col="white", lwd=1) +
+  labs(x = NULL, y = NULL) + 
+  coord_flip() + 
+  scale_y_continuous(labels = comma) + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = "turnips", y = 400,  family="serif",
+           label = c("Total pounds harvested\nfor each crop"))
+```
+
+The results by calories are similar, with a couple of high-calorie crops like beets and kale having more of an impact: 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Calories)
+
+library(ggthemes)
+ggplot(data = peah15bycrop) + 
+  geom_bar(aes(x = Crop, y = Calories), 
+           stat = "identity", width =0.5, alpha =0.4) +
+  geom_hline(yintercept=c(10000,20000,30000,40000), col="white", lwd=1) +
+  labs(x = NULL, y = NULL) + 
+  coord_flip() + 
+  scale_y_continuous(labels = comma) + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = "turnips", y = 30000,  family="serif",
+           label = c("Total calories harvested\nfor each crop"))
+```
+
+The results by plot are here - congratulations to !
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+peah15byplot <- ddply(peah15, .(Name), summarise, Pounds = sum(Pounds), Calories = sum(Calories))
+peah15byplot$Name <- reorder(peah15byplot$Name, peah15byplot$Calories)
+
+ggplot(data = peah15byplot) + 
+  geom_bar(aes(x = Name, y = Calories), 
+           stat = "identity", width =0.5, alpha =0.4) +
+  geom_hline(yintercept=c(0,50,100,150,200,250,300), col="white", lwd=1) +
+  labs(x = NULL, y = NULL) + 
+  coord_flip() + 
+  scale_y_continuous(labels = comma) + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = "Jen", y = 20000,  family="serif",
+           label = c("Total calories harvested\nfor each plot"))
+```
+
+
 Individual results for the year are listed in the table below. 
 
 ```{r, results='asis', echo = FALSE, message = FALSE, warning = FALSE, fig.height = 8}
@@ -82,46 +138,11 @@ print(xtable(table, digits = 0), type = "html", include.rownames = F)
 
 The full data for all years can be found [here](https://docs.google.com/spreadsheet/ccc?key=0AlYsW526rxsmdDhIVzM0VDYzRkdLOXlvcldfQkJtcnc&usp=sharing). 
 
-We don't have results for individual plots the same as in prior years since results for some plots were tracked in the same column. 
-
-We distributed 27 different kinds of vegetables this year - more than most years - with tomatoes, squash and zucchini yielding the most (over 300 lbs of each). 
-
-```{r chart4, echo = FALSE, message = FALSE, warning = FALSE}
-peah15bycrop <- ddply(peah15, .(Crop), summarise, Pounds = sum(Pounds), Calories = sum(Calories))
-peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Pounds)
-
-c1 <- nPlot(x = 'Crop', y = 'Pounds', 
-            width = 500, height = 300,
-            data = peah15bycrop,
-            type = 'multiBarHorizontalChart')
-c1$xAxis(axisLabel='Crop')
-c1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Pounds')
-c1$chart(showControls = F)
-c1$print('chart4')
-```
-
-The results by calories are similar, with a couple high-calorie crops like beets and kale having more of an impact: 
-
-```{r chart5, echo = FALSE, message = FALSE, warning = FALSE}
-peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Calories)
-
-c1 <- nPlot(x = 'Crop', y = 'Calories', 
-            width = 500, height = 300,
-            data = peah15bycrop,
-            type = 'multiBarHorizontalChart')
-c1$xAxis(axisLabel='Crop')
-c1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Calories')
-c1$chart(showControls = F)
-c1$print('chart5')
-```
-
 ## Comparison with prior years
 
-Why were things better this year? 
+We had good results for virtually everything we planted and very good yields for squash, cucumbers, zucchini and tomatoes. Results for most other crops were above average. 
 
-We had good results for virtually everything we planed and not really a bad year for any particular crop. We had historically good yields for beets, cucumbers, beans and lettuce. Results for most other crops were above average. 
-
-```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=10, fig.width = 10,dev = "svg"}
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=12, fig.width = 10,dev = "svg"}
 yearly <- ddply(peah, 
                 .(Year, Crop), 
                 summarise, 
@@ -143,7 +164,6 @@ Why else did things go so well this year?
 
 We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than X harvests. (This may be partly due to better reporting on harvests in the last few years.)
 
-
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
 library(ggthemes)
 ggplot(data = ddply(peah, .(Year), summarise, count = length(Crop))) + 
@@ -157,7 +177,7 @@ ggplot(data = ddply(peah, .(Year), summarise, count = length(Crop))) +
 
 ```
 
-When did we harvest? During the year, the most intense periods were at the end of June and July - gardeners harvested more than 250 pounds during each of these weeks. 
+During the year, the most intense periods were at the end of June and July - gardeners harvested more than 250 pounds during each of these weeks. 
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
 #Add week field to data

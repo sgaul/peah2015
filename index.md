@@ -314,10 +314,23 @@ Here is the same result in pounds harvested.
 
 ## 2015 individual results
 
+We distributed 27 different kinds of vegetables this year - more than most years - with tomatoes, squash and zucchini yielding the most (over 300 lbs of each). 
+
+![plot of chunk unnamed-chunk-1](assets/fig/unnamed-chunk-1-1.svg) 
+
+The results by calories are similar, with a couple of high-calorie crops like beets and kale having more of an impact: 
+
+![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.svg) 
+
+The results by plot are here - congratulations to !
+
+![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.svg) 
+
+
 Individual results for the year are listed in the table below. 
 
 <!-- html table generated in R 3.2.1 by xtable 1.7-4 package -->
-<!-- Sun Sep 27 10:40:09 2015 -->
+<!-- Sun Sep 27 12:01:45 2015 -->
 <table border=1>
 <tr> <th> Name </th> <th> Crop </th> <th> Pounds </th> <th> Calories </th>  </tr>
   <tr> <td> Abby / Scott / Raffaella </td> <td> arugula </td> <td align="right"> 1 </td> <td align="right"> 114 </td> </tr>
@@ -404,444 +417,23 @@ Individual results for the year are listed in the table below.
 
 The full data for all years can be found [here](https://docs.google.com/spreadsheet/ccc?key=0AlYsW526rxsmdDhIVzM0VDYzRkdLOXlvcldfQkJtcnc&usp=sharing). 
 
-We don't have results for individual plots the same as in prior years since results for some plots were tracked in the same column. 
-
-We distributed 27 different kinds of vegetables this year - more than most years - with tomatoes, squash and zucchini yielding the most (over 300 lbs of each). 
-
-
-<div id = 'chart4' class = 'rChart nvd3'></div>
-<script type='text/javascript'>
- $(document).ready(function(){
-      drawchart4()
-    });
-    function drawchart4(){  
-      var opts = {
- "dom": "chart4",
-"width":    500,
-"height":    300,
-"x": "Crop",
-"y": "Pounds",
-"type": "multiBarHorizontalChart",
-"id": "chart4" 
-},
-        data = [
- {
- "Crop": "arugula",
-"Pounds":              3,
-"Calories":          340.5 
-},
-{
- "Crop": "basil",
-"Pounds":              1,
-"Calories":         104.42 
-},
-{
- "Crop": "beans",
-"Pounds":           27.5,
-"Calories":        3870.35 
-},
-{
- "Crop": "beets",
-"Pounds":          64.25,
-"Calories":      12542.885 
-},
-{
- "Crop": "broccoli",
-"Pounds":          53.75,
-"Calories":        8296.85 
-},
-{
- "Crop": "cabbage",
-"Pounds":            154,
-"Calories":          17479 
-},
-{
- "Crop": "cauliflower",
-"Pounds":             32,
-"Calories":           3632 
-},
-{
- "Crop": "collards",
-"Pounds":          117.5,
-"Calories":        16003.5 
-},
-{
- "Crop": "corn",
-"Pounds":             27,
-"Calories":       12012.84 
-},
-{
- "Crop": "cucumbers",
-"Pounds":         183.25,
-"Calories":      12479.325 
-},
-{
- "Crop": "eggplant",
-"Pounds":              8,
-"Calories":         871.68 
-},
-{
- "Crop": "escarole",
-"Pounds":          47.25,
-"Calories":       3646.755 
-},
-{
- "Crop": "herbs",
-"Pounds":             10,
-"Calories":         1634.4 
-},
-{
- "Crop": "kale",
-"Pounds":             42,
-"Calories":           9534 
-},
-{
- "Crop": "kohlrabi",
-"Pounds":          20.25,
-"Calories":       2482.245 
-},
-{
- "Crop": "lettuce",
-"Pounds":         156.85,
-"Calories":      10681.485 
-},
-{
- "Crop": "mustard greens",
-"Pounds":              7,
-"Calories":         858.06 
-},
-{
- "Crop": "parsley",
-"Pounds":           3.75,
-"Calories":          612.9 
-},
-{
- "Crop": "peas",
-"Pounds":           10.5,
-"Calories":        3527.58 
-},
-{
- "Crop": "peppers",
-"Pounds":             44,
-"Calories":         3995.2 
-},
-{
- "Crop": "radishes",
-"Pounds":            4.5,
-"Calories":         326.88 
-},
-{
- "Crop": "spinach",
-"Pounds":              5,
-"Calories":          522.1 
-},
-{
- "Crop": "squash",
-"Pounds":         427.75,
-"Calories":       31071.76 
-},
-{
- "Crop": "swiss chard",
-"Pounds":         140.75,
-"Calories":      12141.095 
-},
-{
- "Crop": "tomatoes",
-"Pounds":         588.25,
-"Calories":      40059.825 
-},
-{
- "Crop": "turnips",
-"Pounds":           23.5,
-"Calories":        2987.32 
-},
-{
- "Crop": "zucchini",
-"Pounds":         300.75,
-"Calories":       21846.48 
-} 
-]
-  
-      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
-        var data = d3.nest()
-          .key(function(d){
-            //return opts.group === undefined ? 'main' : d[opts.group]
-            //instead of main would think a better default is opts.x
-            return opts.group === undefined ? opts.y : d[opts.group];
-          })
-          .entries(data);
-      }
-      
-      if (opts.disabled != undefined){
-        data.map(function(d, i){
-          d.disabled = opts.disabled[i]
-        })
-      }
-      
-      nv.addGraph(function() {
-        var chart = nv.models[opts.type]()
-          .width(opts.width)
-          .height(opts.height)
-          
-        if (opts.type != "bulletChart"){
-          chart
-            .x(function(d) { return d[opts.x] })
-            .y(function(d) { return d[opts.y] })
-        }
-          
-         
-        chart
-  .showControls(false)
-          
-        chart.xAxis
-  .axisLabel("Crop")
-
-        
-        
-        chart.yAxis
-  .tickFormat(function(d) {return d3.format(',.0f')(d)})
-  .axisLabel("Pounds")
-      
-       d3.select("#" + opts.id)
-        .append('svg')
-        .datum(data)
-        .transition().duration(500)
-        .call(chart);
-
-       nv.utils.windowResize(chart.update);
-       return chart;
-      });
-    };
-</script>
-
-The results by calories are similar, with a couple high-calorie crops like beets and kale having more of an impact: 
-
-
-<div id = 'chart5' class = 'rChart nvd3'></div>
-<script type='text/javascript'>
- $(document).ready(function(){
-      drawchart5()
-    });
-    function drawchart5(){  
-      var opts = {
- "dom": "chart5",
-"width":    500,
-"height":    300,
-"x": "Crop",
-"y": "Calories",
-"type": "multiBarHorizontalChart",
-"id": "chart5" 
-},
-        data = [
- {
- "Crop": "arugula",
-"Pounds":              3,
-"Calories":          340.5 
-},
-{
- "Crop": "basil",
-"Pounds":              1,
-"Calories":         104.42 
-},
-{
- "Crop": "beans",
-"Pounds":           27.5,
-"Calories":        3870.35 
-},
-{
- "Crop": "beets",
-"Pounds":          64.25,
-"Calories":      12542.885 
-},
-{
- "Crop": "broccoli",
-"Pounds":          53.75,
-"Calories":        8296.85 
-},
-{
- "Crop": "cabbage",
-"Pounds":            154,
-"Calories":          17479 
-},
-{
- "Crop": "cauliflower",
-"Pounds":             32,
-"Calories":           3632 
-},
-{
- "Crop": "collards",
-"Pounds":          117.5,
-"Calories":        16003.5 
-},
-{
- "Crop": "corn",
-"Pounds":             27,
-"Calories":       12012.84 
-},
-{
- "Crop": "cucumbers",
-"Pounds":         183.25,
-"Calories":      12479.325 
-},
-{
- "Crop": "eggplant",
-"Pounds":              8,
-"Calories":         871.68 
-},
-{
- "Crop": "escarole",
-"Pounds":          47.25,
-"Calories":       3646.755 
-},
-{
- "Crop": "herbs",
-"Pounds":             10,
-"Calories":         1634.4 
-},
-{
- "Crop": "kale",
-"Pounds":             42,
-"Calories":           9534 
-},
-{
- "Crop": "kohlrabi",
-"Pounds":          20.25,
-"Calories":       2482.245 
-},
-{
- "Crop": "lettuce",
-"Pounds":         156.85,
-"Calories":      10681.485 
-},
-{
- "Crop": "mustard greens",
-"Pounds":              7,
-"Calories":         858.06 
-},
-{
- "Crop": "parsley",
-"Pounds":           3.75,
-"Calories":          612.9 
-},
-{
- "Crop": "peas",
-"Pounds":           10.5,
-"Calories":        3527.58 
-},
-{
- "Crop": "peppers",
-"Pounds":             44,
-"Calories":         3995.2 
-},
-{
- "Crop": "radishes",
-"Pounds":            4.5,
-"Calories":         326.88 
-},
-{
- "Crop": "spinach",
-"Pounds":              5,
-"Calories":          522.1 
-},
-{
- "Crop": "squash",
-"Pounds":         427.75,
-"Calories":       31071.76 
-},
-{
- "Crop": "swiss chard",
-"Pounds":         140.75,
-"Calories":      12141.095 
-},
-{
- "Crop": "tomatoes",
-"Pounds":         588.25,
-"Calories":      40059.825 
-},
-{
- "Crop": "turnips",
-"Pounds":           23.5,
-"Calories":        2987.32 
-},
-{
- "Crop": "zucchini",
-"Pounds":         300.75,
-"Calories":       21846.48 
-} 
-]
-  
-      if(!(opts.type==="pieChart" || opts.type==="sparklinePlus" || opts.type==="bulletChart")) {
-        var data = d3.nest()
-          .key(function(d){
-            //return opts.group === undefined ? 'main' : d[opts.group]
-            //instead of main would think a better default is opts.x
-            return opts.group === undefined ? opts.y : d[opts.group];
-          })
-          .entries(data);
-      }
-      
-      if (opts.disabled != undefined){
-        data.map(function(d, i){
-          d.disabled = opts.disabled[i]
-        })
-      }
-      
-      nv.addGraph(function() {
-        var chart = nv.models[opts.type]()
-          .width(opts.width)
-          .height(opts.height)
-          
-        if (opts.type != "bulletChart"){
-          chart
-            .x(function(d) { return d[opts.x] })
-            .y(function(d) { return d[opts.y] })
-        }
-          
-         
-        chart
-  .showControls(false)
-          
-        chart.xAxis
-  .axisLabel("Crop")
-
-        
-        
-        chart.yAxis
-  .tickFormat(function(d) {return d3.format(',.0f')(d)})
-  .axisLabel("Calories")
-      
-       d3.select("#" + opts.id)
-        .append('svg')
-        .datum(data)
-        .transition().duration(500)
-        .call(chart);
-
-       nv.utils.windowResize(chart.update);
-       return chart;
-      });
-    };
-</script>
-
 ## Comparison with prior years
 
-Why were things better this year? 
+We had good results for virtually everything we planted and very good yields for squash, cucumbers, zucchini and tomatoes. Results for most other crops were above average. 
 
-We had good results for virtually everything we planed and not really a bad year for any particular crop. We had historically good yields for beets, cucumbers, beans and lettuce. Results for most other crops were above average. 
-
-![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.svg) 
+![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.svg) 
 
 Why else did things go so well this year? 
 
 We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than X harvests. (This may be partly due to better reporting on harvests in the last few years.)
 
+![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.svg) 
 
-![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.svg) 
+During the year, the most intense periods were at the end of June and July - gardeners harvested more than 250 pounds during each of these weeks. 
 
-When did we harvest? During the year, the most intense periods were at the end of June and July - gardeners harvested more than 250 pounds during each of these weeks. 
-
-![plot of chunk unnamed-chunk-4](assets/fig/unnamed-chunk-4-1.svg) 
+![plot of chunk unnamed-chunk-7](assets/fig/unnamed-chunk-7-1.svg) 
 
 We visited the garden most often on Sunday, and least often on Saturdays, Mondays and Tuesdays. (Saturday visits may be after sundown or data entry errors on my part.)
 
-![plot of chunk unnamed-chunk-5](assets/fig/unnamed-chunk-5-1.svg) 
+![plot of chunk unnamed-chunk-8](assets/fig/unnamed-chunk-8-1.svg) 
 
