@@ -1,0 +1,201 @@
+---
+title       : Pe'ah Garden stats
+subtitle    : Results for 2015
+author      : Scott Gaul
+job         : Pe'ah stats person
+framework   : minimal      # 
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+ext_widgets : {rCharts: ["libraries/nvd3"]} 
+mode        : selfcontained # {standalone, draft}
+---
+
+## 2015 overall results
+
+We had great results again in 2014! 
+
+We are on track for the biggest harvest ever in 2015, even more than [2014 which was the previous highest yields ever](http://sgaul.github.io/peah2014/).    
+
+While we are still harvesting, gardeners so far have distributed 2,500 pounds of vegetables or about 230,000 calories - roughly three months of food for an adult. This is on track with last year's totals, which were the previous highest ever.
+
+```{r setup, message = F, echo = F, cache = F}
+require(rCharts)
+knitr::opts_chunk$set(comment = NA, results = 'asis', tidy = F, message = T)
+```
+
+
+```{r chart1, echo = FALSE, message = FALSE, warning = FALSE}
+library(ggplot2)
+library(reshape)
+library(plyr)
+library(scales)
+library(extrafont)
+windowsFonts(Times=windowsFont("TT Times New Roman"))
+
+#Load peah data
+peah <- read.csv("Peah crops stats.csv")
+names <- read.csv("names.csv")
+
+n1 <- nPlot(y = 'Calories', x = 'Year', 
+            width = 500, height = 300,
+            data = ddply(peah, .(Year), summarise, 
+                    Pounds = sum(Pounds),
+                    Calories = sum(Calories)),
+            type = 'discreteBarChart')
+n1$xAxis(axisLabel='Year')
+n1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Calories')
+n1$chart(forceY = c(0,170000), margin = list(left = 80))
+n1$print('chart1')
+```
+
+Here is the same result in pounds harvested. 
+
+```{r chart2, echo = FALSE, message = FALSE, warning = FALSE}
+n1 <- nPlot(y = 'Pounds', x = 'Year', 
+            width = 500, height = 300,
+            data = ddply(peah, .(Year), summarise, 
+                    Pounds = sum(Pounds),
+                    Calories = sum(Calories)),
+            type = 'discreteBarChart')
+n1$xAxis(axisLabel='Year')
+n1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Pounds')
+n1$chart(forceY = c(0,1700), margin = list(left = 80))
+n1$print('chart2')
+```
+
+## 2015 individual results
+
+Individual results for the year are listed in the table below. 
+
+```{r, results='asis', echo = FALSE, message = FALSE, warning = FALSE, fig.height = 8}
+#Current year results by plot and by crop
+peah15 <- subset(peah, Year == 2015)
+peah15 <- merge(peah15, names, by = "Plot.number")
+
+library(xtable)
+table <- ddply(peah15, .(Name, Crop), summarise, 
+               Pounds = round(sum(Pounds),0), 
+               Calories = round(sum(Calories),0))
+print(xtable(table, digits = 0), type = "html", include.rownames = F)
+```
+
+The full data for all years can be found [here](https://docs.google.com/spreadsheet/ccc?key=0AlYsW526rxsmdDhIVzM0VDYzRkdLOXlvcldfQkJtcnc&usp=sharing). 
+
+We don't have results for individual plots the same as in prior years since results for some plots were tracked in the same column. 
+
+We distributed 27 different kinds of vegetables this year - more than most years - with tomatoes, squash and zucchini yielding the most (over 300 lbs of each). 
+
+```{r chart4, echo = FALSE, message = FALSE, warning = FALSE}
+peah15bycrop <- ddply(peah15, .(Crop), summarise, Pounds = sum(Pounds), Calories = sum(Calories))
+peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Pounds)
+
+c1 <- nPlot(x = 'Crop', y = 'Pounds', 
+            width = 500, height = 300,
+            data = peah15bycrop,
+            type = 'multiBarHorizontalChart')
+c1$xAxis(axisLabel='Crop')
+c1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Pounds')
+c1$chart(showControls = F)
+c1$print('chart4')
+```
+
+The results by calories are similar, with a couple high-calorie crops like beets and kale having more of an impact: 
+
+```{r chart5, echo = FALSE, message = FALSE, warning = FALSE}
+peah15bycrop$Crop <- reorder(peah15bycrop$Crop, peah15bycrop$Calories)
+
+c1 <- nPlot(x = 'Crop', y = 'Calories', 
+            width = 500, height = 300,
+            data = peah15bycrop,
+            type = 'multiBarHorizontalChart')
+c1$xAxis(axisLabel='Crop')
+c1$yAxis(tickFormat = "#!function(d) {return d3.format(',.0f')(d)}!#", axisLabel='Calories')
+c1$chart(showControls = F)
+c1$print('chart5')
+```
+
+## Comparison with prior years
+
+Why were things better this year? 
+
+We had good results for virtually everything we planed and not really a bad year for any particular crop. We had historically good yields for beets, cucumbers, beans and lettuce. Results for most other crops were above average. 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=10, fig.width = 10,dev = "svg"}
+yearly <- ddply(peah, 
+                .(Year, Crop), 
+                summarise, 
+                Pounds.per.plot = sum(Pounds.per.plot) / mean(Number.of.plots))
+
+yearly <- subset(yearly, Crop %in% unique(subset(ddply(yearly, .(Crop), summarise, count = length(unique(Year))), count > 5)$Crop))
+
+ggplot(data = yearly, aes(x = Year, y = Pounds.per.plot)) + 
+  geom_line() + 
+  scale_y_continuous(labels = comma) + 
+  geom_point(data = subset(yearly, Year == 2015), 
+             aes(x = Year, y = Pounds.per.plot), colour = "red") + 
+  labs(title = "Crop harvest trends by year", y = "Pounds per plot") +
+  facet_wrap(~ Crop, ncol = 3, scales = "free_y") + 
+  theme_minimal(base_size = 16, base_family = "Times")
+```
+
+Why else did things go so well this year? 
+
+We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than X harvests. (This may be partly due to better reporting on harvests in the last few years.)
+
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+library(ggthemes)
+ggplot(data = ddply(peah, .(Year), summarise, count = length(Crop))) + 
+  geom_bar(aes(x = Year, y = count), stat = "identity", width =0.5, alpha =0.4) +
+  geom_hline(yintercept=c(50,100,150,200,250,300,350), col="white", lwd=1) +
+  labs(x = NULL, y = NULL) + 
+  scale_y_continuous(labels = comma, breaks=c(50,100,150,200,250,300,350)) + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = 2006, y = 300,  family="serif",
+           label = c("Number of harvests\nper year\n2002 - 2015"))
+
+```
+
+When did we harvest? During the year, the most intense periods were at the end of June and July - gardeners harvested more than 250 pounds during each of these weeks. 
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+#Add week field to data
+peah$Date <- as.Date(peah$Date, format = "%m/%d/%Y")
+peah$Week = as.integer(format(strptime(peah$Date,"%Y-%m-%d"),"%W"))
+
+ggplot(data = ddply(subset(peah, Year == 2015),
+                    .(Week), 
+                    summarise, 
+                    Pounds = sum(Pounds, na.rm = T)), 
+       aes(x = Month, y = Pounds)) + 
+  geom_bar(aes(x = Week, y = Pounds), stat = "identity", width =.5, alpha =.4) +
+  geom_hline(yintercept=c(100,200,300), col="white", lwd=1) +
+  labs(x = "Week (number)", y = "Pounds harvested") + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = 27, y = 275,  family="serif",
+           label = c("Week of June 29")) + 
+  annotate("text", x = 32, y = 300,  family="serif",
+           label = c("Week of July 27"))
+```
+
+We visited the garden most often on Sunday, and least often on Saturdays, Mondays and Tuesdays. (Saturday visits may be after sundown or data entry errors on my part.)
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
+#Summarize by day of week
+peah$WEEKDAY = weekdays(as.Date(peah$Date))
+peah$WEEKDAY <- factor(peah$WEEKDAY, levels = c("Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"))
+
+ggplot(data = ddply(subset(peah, Year == 2015),
+                    .(WEEKDAY), 
+                    summarise, 
+                    visits = length(Crop)), 
+       aes(x = Month, y = visits)) + 
+  geom_bar(aes(x = WEEKDAY, y = visits), stat ="identity", width =.5, alpha =.4) +
+  geom_hline(yintercept=c(0,25,50,75,100), col="white", lwd=1) +
+  labs(x = NULL, y = "Number of visits") + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  annotate("text", x = "Thursday", y = 90,  family="serif",
+           label = c("Frequency of visits\n(Days of the week)"))
+```
+
