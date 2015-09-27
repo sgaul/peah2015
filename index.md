@@ -13,7 +13,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## 2015 overall results
 
-We had great results again in 2014! 
+We had great results again in 2015! 
 
 We are on track for the biggest harvest ever in 2015, even more than [2014 which was the previous highest yields ever](http://sgaul.github.io/peah2014/).    
 
@@ -322,7 +322,7 @@ The results by calories are similar, with a couple of high-calorie crops like be
 
 ![plot of chunk unnamed-chunk-2](assets/fig/unnamed-chunk-2-1.svg) 
 
-The results by plot are here - congratulations to !
+The results by plot are here - congratulations to Priscilla, Leslie, Dan, Masha and Phil and everyone the worked on the Community plot!
 
 ![plot of chunk unnamed-chunk-3](assets/fig/unnamed-chunk-3-1.svg) 
 
@@ -425,7 +425,7 @@ We had good results for virtually everything we planted and very good yields for
 
 Why else did things go so well this year? 
 
-We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than X harvests. (This may be partly due to better reporting on harvests in the last few years.)
+We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than 155 harvests. (This may be partly due to better reporting on harvests in the last few years.)
 
 ![plot of chunk unnamed-chunk-6](assets/fig/unnamed-chunk-6-1.svg) 
 

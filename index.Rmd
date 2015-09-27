@@ -13,7 +13,7 @@ mode        : selfcontained # {standalone, draft}
 
 ## 2015 overall results
 
-We had great results again in 2014! 
+We had great results again in 2015! 
 
 We are on track for the biggest harvest ever in 2015, even more than [2014 which was the previous highest yields ever](http://sgaul.github.io/peah2014/).    
 
@@ -103,7 +103,7 @@ ggplot(data = peah15bycrop) +
            label = c("Total calories harvested\nfor each crop"))
 ```
 
-The results by plot are here - congratulations to !
+The results by plot are here - congratulations to Priscilla, Leslie, Dan, Masha and Phil and everyone the worked on the Community plot!
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
 peah15byplot <- ddply(peah15, .(Name), summarise, Pounds = sum(Pounds), Calories = sum(Calories))
@@ -162,7 +162,7 @@ ggplot(data = yearly, aes(x = Year, y = Pounds.per.plot)) +
 
 Why else did things go so well this year? 
 
-We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than X harvests. (This may be partly due to better reporting on harvests in the last few years.)
+We had more harvests from the garden than any prior year. Gardeners have harvested almost 400 times to date. Last year, we harvested 266 times and no other prior year had more than 155 harvests. (This may be partly due to better reporting on harvests in the last few years.)
 
 ```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=5, dev = "svg"}
 library(ggthemes)
