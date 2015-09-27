@@ -330,7 +330,7 @@ The results by plot are here - congratulations to Priscilla, Leslie, Dan, Masha 
 Individual results for the year are listed in the table below. 
 
 <!-- html table generated in R 3.2.1 by xtable 1.7-4 package -->
-<!-- Sun Sep 27 12:01:45 2015 -->
+<!-- Sun Sep 27 12:43:27 2015 -->
 <table border=1>
 <tr> <th> Name </th> <th> Crop </th> <th> Pounds </th> <th> Calories </th>  </tr>
   <tr> <td> Abby / Scott / Raffaella </td> <td> arugula </td> <td align="right"> 1 </td> <td align="right"> 114 </td> </tr>
