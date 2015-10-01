@@ -219,3 +219,20 @@ ggplot(data = ddply(subset(peah, Year == 2015),
            label = c("Frequency of visits\n(Days of the week)"))
 ```
 
+When are various crops harvested? Crops like beans and lettuce are harvested early, eggplants late and squash, collards and kale for longer periods.
+
+```{r echo = FALSE, message = FALSE, warning = FALSE, fig.height=12, dev = "svg"}
+#Create chart by week for past x years
+ggplot(data = ddply(subset(peah, Year == 2015 &  
+                           Crop %in% unique(subset(ddply(yearly, .(Crop), summarise, count = length(unique(Year))), count > 7)$Crop)),
+                    .(Crop, Week), 
+                    summarise, 
+                    Pounds = sum(Pounds, na.rm = T)), 
+       aes(x = Month, y = Pounds)) + 
+  geom_bar(aes(x = Week, y = Pounds), stat = "identity", width =.5, alpha =.4) +
+#  geom_hline(yintercept=c(100,200,300), col="white", lwd=1) +
+  labs(x = "Week (number)", y = "Pounds harvested") + 
+  theme_tufte(base_size = 16, ticks = F) + 
+  facet_wrap(~ Crop, scales = "free_y", ncol = 3)
+```
+

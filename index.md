@@ -437,3 +437,7 @@ We visited the garden most often on Sunday, and least often on Saturdays, Monday
 
 ![plot of chunk unnamed-chunk-8](assets/fig/unnamed-chunk-8-1.svg) 
 
+When are various crops harvested? Crops like beans and lettuce are harvested early, eggplants late and squash, collards and kale for longer periods.
+
+![plot of chunk unnamed-chunk-9](assets/fig/unnamed-chunk-9-1.svg) 
+
